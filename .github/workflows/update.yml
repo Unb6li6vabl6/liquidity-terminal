@@ -1,0 +1,24 @@
+name: AutoDataFeed
+on:
+  schedule:
+    - cron: '0 9 * * *' # Odpala się codziennie o 09:00
+  workflow_dispatch:
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with: { python-version: '3.9' }
+      - name: Fetch Data
+        run: |
+          pip install requests yfinance pandas
+          python fetch_data.py
+      - name: Push to Repo
+        run: |
+          git config --global user.name 'LiquidityBot'
+          git config --global user.email 'bot@liquidity.pro'
+          git add public/live_data.json
+          git commit -m "Live Data Update" || exit 0
+          git push
