@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/liquidity-terminal/static/js/main.24546713.js",
+    "index.html": "/liquidity-terminal/index.html",
+    "main.24546713.js.map": "/liquidity-terminal/static/js/main.24546713.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.24546713.js"
+  ]
+}
