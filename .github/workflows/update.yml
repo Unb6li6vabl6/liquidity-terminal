@@ -1,15 +1,19 @@
 name: AutoDataFeed
 on:
   schedule:
-    - cron: '0 9 * * *' # Odpala się codziennie o 09:00
+    - cron: '0 9 * * *'
   workflow_dispatch:
+
+permissions:
+  contents: write  # TO JEST KLUCZ: Daje botowi prawo do zapisu
+
 jobs:
   run-bot:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3 # Używamy nowszej wersji v3
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with: { python-version: '3.9' }
       - name: Fetch Data
         run: |
