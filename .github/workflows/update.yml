@@ -1,28 +1,51 @@
-name: AutoDataFeed
+name: AutoDataAndDeploy
 on:
   schedule:
     - cron: '0 9 * * *'
   workflow_dispatch:
 
 permissions:
-  contents: write  # TO JEST KLUCZ: Daje botowi prawo do zapisu
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
-  run-bot:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3 # Używamy nowszej wersji v3
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Setup Python
         uses: actions/setup-python@v4
-        with: { python-version: '3.9' }
-      - name: Fetch Data
+        with:
+          python-version: '3.9'
+
+      - name: Fetch Live Data
         run: |
           pip install requests yfinance pandas
           python fetch_data.py
-      - name: Push to Repo
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install and Build React
+        run: |
+          npm install
+          npm run build
+
+      - name: Commit Data (so it stays in repo)
         run: |
           git config --global user.name 'LiquidityBot'
           git config --global user.email 'bot@liquidity.pro'
           git add public/live_data.json
           git commit -m "Live Data Update" || exit 0
           git push
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: build
+          branch: gh-pages
