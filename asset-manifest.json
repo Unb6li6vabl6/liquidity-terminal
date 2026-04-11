@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/liquidity-terminal/static/js/main.042fea91.js",
+    "main.js": "/liquidity-terminal/static/js/main.71164549.js",
     "index.html": "/liquidity-terminal/index.html",
-    "main.042fea91.js.map": "/liquidity-terminal/static/js/main.042fea91.js.map"
+    "main.71164549.js.map": "/liquidity-terminal/static/js/main.71164549.js.map"
   },
   "entrypoints": [
-    "static/js/main.042fea91.js"
+    "static/js/main.71164549.js"
   ]
 }
